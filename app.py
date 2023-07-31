@@ -11,7 +11,7 @@ def home():
 def pokemon_name():
     pokemon_data = None
     if request.method == 'POST':
-        pokemon_name = request.form.get('pokemon_name').lower() # for case-insensitive but still not working tho?
+        pokemon_name = request.form.get('pokemon_name').lower() # for case-insensitive issue
         pokemon_data = get_pokemon_data(pokemon_name)
     return render_template('pokemon_name.html', title='Pokemon Page', pokemon_data=pokemon_data)
 
