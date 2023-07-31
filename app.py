@@ -11,7 +11,7 @@ def home():
 def pokemon_name():
     pokemon_data = None
     if request.method == 'POST':
-        pokemon_name = request.form.get('pokemon_name')
+        pokemon_name = request.form.get('pokemon_name').lower() # for case-insensitive but still not working tho?
         pokemon_data = get_pokemon_data(pokemon_name)
     return render_template('pokemon_name.html', title='Pokemon Page', pokemon_data=pokemon_data)
 
@@ -24,10 +24,11 @@ def get_pokemon_data(pokemon_name):
     data = response.json()
 
     name = data['name']
+    stats = {stat['stat']['name']: stat['base_stat'] for stat in data['stats']}
+    front_shiny_sprite = data['sprites']['front_shiny']
     ability = data['abilities'][0]['ability']['name']
-    base_experience = data['base_experience']
     
-    return {'name': name, 'ability': ability, 'base_experience': base_experience}
+    return {'name': name, 'hp': stats['hp'], 'defense': stats['defense'], 'attack': stats['attack'], 'front_shiny_sprite': front_shiny_sprite, 'ability': ability}
 
 if __name__ == "__main__":
     app.run(debug=True)
@@ -104,6 +105,141 @@ if __name__ == "__main__":
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#v.1 for learning/testing
+
+"""
+
+from flask import Flask, request, render_template
+import requests
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('base.html', title='Home')
+
+@app.route('/pokemon_name', methods=['GET', 'POST'])
+def pokemon_name():
+    pokemon_data = None
+    if request.method == 'POST':
+        pokemon_name = request.form.get('pokemon_name')
+        pokemon_data = get_pokemon_data(pokemon_name)
+    return render_template('pokemon_name.html', title='Pokemon Page', pokemon_data=pokemon_data)
+
+
+# Function to retrieve Pokémon data
+def get_pokemon_data(pokemon_name):
+    base_url = "https://pokeapi.co/api/v2/"
+    url = base_url + f"pokemon/{pokemon_name}/"
+    response = requests.get(url)
+    data = response.json()
+
+    name = data['name']
+    ability = data['abilities'][0]['ability']['name']
+    base_experience = data['base_experience']
+    
+    return {'name': name, 'ability': ability, 'base_experience': base_experience}
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+
+
+
+
+
+
+pokemon_name.html v.1 :
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="px-3">
+    <div class="mb-3">
+      <label for="pokemon_name" class="form-label"><br><b>WELCOME TO THE POKEMON SINGLE PAGE APP!</b><br><br><br>Enter Pokemon Name In All "lower case": </label>
+      <input type="text" class="form-control" id="pokemon_name" name="pokemon_name">
+    </div>
+    <button type="submit" class="btn btn-primary">Get Results!</button>
+  </form>
+  {% if pokemon_data %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Pokemon Name</th>
+        <th scope="col">Ability</th>
+        <th scope="col">Base Experience</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ pokemon_data.name }}</td>
+        <td>{{ pokemon_data.ability }}</td>
+        <td>{{ pokemon_data.base_experience }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+base.html v.1 :
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+"""
 
 
 
