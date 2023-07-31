@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="px-3">
+    <div class="mb-3">
+      <label for="pokemon_name" class="form-label">Enter Pokemon Name: </label>
+      <input type="text" class="form-control" id="pokemon_name" name="pokemon_name">
+    </div>
+    <button type="submit" class="btn btn-primary">Get Results!</button>
+  </form>
+  {% if pokemon_data %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Pokemon Name</th>
+        <th scope="col">Ability</th>
+        <th scope="col">Base Experience</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ pokemon_data.name }}</td>
+        <td>{{ pokemon_data.ability }}</td>
+        <td>{{ pokemon_data.base_experience }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}

@@ -1,6 +1,141 @@
 from flask import Flask, request, render_template
 import requests
 
+app = Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('base.html', title='Home')
+
+@app.route('/pokemon_name', methods=['GET', 'POST'])
+def pokemon_name():
+    pokemon_data = None
+    if request.method == 'POST':
+        pokemon_name = request.form.get('pokemon_name')
+        pokemon_data = get_pokemon_data(pokemon_name)
+    return render_template('pokemon_name.html', title='Pokemon Page', pokemon_data=pokemon_data)
+
+
+# Function to retrieve Pokémon data
+def get_pokemon_data(pokemon_name):
+    base_url = "https://pokeapi.co/api/v2/"
+    url = base_url + f"pokemon/{pokemon_name}/"
+    response = requests.get(url)
+    data = response.json()
+
+    name = data['name']
+    ability = data['abilities'][0]['ability']['name']
+    base_experience = data['base_experience']
+    
+    return {'name': name, 'ability': ability, 'base_experience': base_experience}
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""  
+
+from flask import Flask, request, render_template
+import requests
+
 
 
 app = Flask(__name__)
@@ -108,7 +243,7 @@ def get_driver_info(data):
 
 
 ########################### ERGAST EXAMPLE page renders no error but
-"""  
+
 
 @app.route('/ergast', methods=['GET', 'POST'])
 def ergast():
