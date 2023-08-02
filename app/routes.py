@@ -6,14 +6,15 @@ from app import app
 
 
 
+
+
+
 REGISTERED_USERS = {
     'dylank@thieves.com': {
         'name': 'Dylan',
         'password': 'ilovemydog'
     }
 }
-
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -37,9 +38,20 @@ def login():
 
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
+@app.route('/home')
 def home():
-    return render_template('base.html', title='Home')
+    return render_template('home.html')
+
+
+
+
+
+
+
+#############################################pokemon_name#############################################
+
+
 
 @app.route('/pokemon_name', methods=['GET', 'POST'])
 def pokemon_name():
