@@ -14,7 +14,7 @@ def login():
     if request.method == 'POST':
         return '<h1>Logged In</h1>'
     else:
-        return render_template('forms.html')
+        return render_template('login.html', form=form)
 
 
 
