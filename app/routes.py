@@ -26,6 +26,8 @@ def login():
         #return '<h1>Logged In</h1>'
         if email in REGISTERED_USERS and password == REGISTERED_USERS[email]['password']:
             return f"Hello, {REGISTERED_USERS[email]['name']}"
+        else:
+            return 'Invalid email or password'
             #return '<h1>Logged In</h1>'
     else:
         print('not validated')
