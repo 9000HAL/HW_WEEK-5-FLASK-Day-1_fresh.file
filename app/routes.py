@@ -1,6 +1,21 @@
 from flask import request, render_template
 import requests
+from app.forms import LoginForm
 from app import app
+
+
+
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if request.method == 'POST':
+        return '<h1>Logged In</h1>'
+    else:
+        return render_template('forms.html')
+
 
 
 
