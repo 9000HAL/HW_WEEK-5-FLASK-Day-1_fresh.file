@@ -6,6 +6,7 @@
 
     {% block content %}
     <form action="" method="POST">
+        {{ form.hidden_tag()}}
         {{ form.email }}
         <label for="username">Username: </label>
         <input type="text" id="username">
