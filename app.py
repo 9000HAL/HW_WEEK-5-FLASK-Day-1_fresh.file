@@ -97,8 +97,6 @@ from app import app
 
 
 
-
-
 #v.1 for learning/testing
 
 """
