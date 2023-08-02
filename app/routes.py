@@ -40,6 +40,12 @@ def login():
 
 
 
+# sign up form
+@app.route('/signup')
+def signup():
+    pass
+
+
 
 
 
