@@ -1,6 +1,6 @@
 from flask import request, render_template
 import requests
-from app.forms import LoginForm
+from app.forms import LoginForm, SignUpForm
 from app import app
 
 
@@ -40,13 +40,16 @@ def login():
 
 
 
-# sign up form
-@app.route('/signup')
+
+
+# sign up form #############################################
+@app.route('/signup' , methods=['GET', 'POST'])
 def signup():
-    pass
-
-
-
+    form = SignUpForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        pass
+    else:
+        return render_template('signup.html', form=form)
 
 
 
