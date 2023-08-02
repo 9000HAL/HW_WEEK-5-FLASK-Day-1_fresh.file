@@ -6,14 +6,29 @@ from app import app
 
 
 
+REGISTERED_USERS = {
+    'dylank@thieves.com': {
+        'name': 'Dylan',
+        'password': 'ilovemydog'
+    }
+}
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if request.method == 'POST':
-        return '<h1>Logged In</h1>'
+    if request.method == 'POST' and form.validate_on_submit():
+        email = form.email.data.lower()
+        password = form.password.data
+        #print(email, password)
+        #return '<h1>Logged In</h1>'
+        if email in REGISTERED_USERS and password == REGISTERED_USERS[email]['password']:
+            return f('validated')
+            return '<h1>Logged In</h1>'
     else:
+        print('not validated')
         return render_template('login.html', form=form)
 
 
