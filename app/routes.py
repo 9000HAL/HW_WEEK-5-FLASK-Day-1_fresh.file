@@ -4,7 +4,10 @@ from app.forms import LoginForm
 from app import app
 
 
-
+@app.route('/')
+@app.route('/home')
+def home():
+    return render_template('home.html')
 
 
 
@@ -37,11 +40,6 @@ def login():
 
 
 
-
-@app.route('/')
-@app.route('/home')
-def home():
-    return render_template('home.html')
 
 
 
