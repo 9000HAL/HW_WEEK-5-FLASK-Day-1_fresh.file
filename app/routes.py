@@ -112,11 +112,21 @@ def signup():
         new_user = User()
 
         # set user_data to our USER ATTRIBUTES
-        new_user.from_dict(user_data)
+        #new_user.from_dict(user_data) -----attempted to use this but it did not work
+
+        #non-clean approach lol THAT WORKS
+        new_user.first_name = user_data['first_name']
+        new_user.last_name = user_data['last_name']
+        new_user.email = user_data['email']
+        new_user.password = new_user.hash_password(user_data['password'])
+        
+        
 
         # save to the database
         db.session.add(new_user)
+        db.session.commit()
 
-        return 'Thank you for signingg up!'
+        flash(f"Thank you for signing up {user_data['first_name']}!", 'success')
+        return redirect(url_for('login'))
     else:
         return render_template('signup.html', form=form)
