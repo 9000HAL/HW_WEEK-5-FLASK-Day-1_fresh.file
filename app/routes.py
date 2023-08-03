@@ -1,4 +1,4 @@
-from flask import request, render_template
+from flask import request, render_template, redirect, url_for, flash
 import requests
 from app.forms import LoginForm, SignUpForm
 from app import app
@@ -29,9 +29,12 @@ def login():
         #print(email, password)
         #return '<h1>Logged In</h1>'
         if email in REGISTERED_USERS and password == REGISTERED_USERS[email]['password']:
-            return f"Hello, {REGISTERED_USERS[email]['name']}"
+            flash(f'Welcome back, {REGISTERED_USERS[email]["name"]}!', 'success')
+            return redirect(url_for('home'))
+            #return f"Hello, {REGISTERED_USERS[email]['name']}"
         else:
-            return 'Invalid email or password'
+            error = 'INVALID EMAIL OR PASSWORD'
+            return render_template('login.html', form=form, error=error)
             #return '<h1>Logged In</h1>'
     else:
         print('not validated')
