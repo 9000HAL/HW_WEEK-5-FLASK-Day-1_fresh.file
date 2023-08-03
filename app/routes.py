@@ -3,6 +3,7 @@ import requests
 from app.forms import LoginForm, SignUpForm
 from app import app, db
 from app.models import User
+from werkzeug.security import check_password_hash
 
 
 
@@ -75,16 +76,13 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data.lower()
         password = form.password.data
-        #print(email, password)
-        #return '<h1>Logged In</h1>'
-        if email in REGISTERED_USERS and password == REGISTERED_USERS[email]['password']:
-            flash(f'Welcome back, {REGISTERED_USERS[email]["name"]}!', 'success')
+        queried_user = User.query.filter(User.email == email).first()
+        if queried_user and check_password_hash(queried_user.password, password):
+            flash(f'Welcome back {queried_user.first_name}!', 'success')
             return redirect(url_for('home'))
-            #return f"Hello, {REGISTERED_USERS[email]['name']}"
         else:
             error = 'INVALID EMAIL OR PASSWORD'
             return render_template('login.html', form=form, error=error)
-            #return '<h1>Logged In</h1>'
     else:
         print('not validated')
         return render_template('login.html', form=form)
