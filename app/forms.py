@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import EmailField, PasswordField, SubmitField
+from wtforms import EmailField, PasswordField, SubmitField, StringField
 from wtforms.validators import DataRequired, EqualTo
 
 
@@ -13,6 +13,12 @@ class SignUpForm(FlaskForm):
     last_name = StringField('Last Name: ', validators=[DataRequired()])
     email = EmailField('Email: ', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    confirn_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit_btn = SubmitField('Sign Up')
 
+
+
+
+
+#first_name = StringField('First Name: ', validators=[DataRequired()])
+#last_name = StringField('Last Name: ', validators=[DataRequired()])
