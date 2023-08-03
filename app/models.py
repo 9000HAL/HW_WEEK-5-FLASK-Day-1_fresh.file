@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
 
     # hashes our password when a user signs up
-    def hash_password(self, signup_password):
+    def hash_password(new_user, signup_password):
         return generate_password_hash(signup_password)
 
 
