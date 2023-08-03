@@ -8,7 +8,7 @@ class User(UserMixin, db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
-    password_hash = db.Column(db.String)
+    password = db.Column(db.String) 
     created_on = db.Column(db.DateTime, default=datetime.utcnow())
 
     # hashes our password when a user signs up

@@ -3,8 +3,7 @@ import requests
 from app.forms import LoginForm, SignUpForm
 from app import app, db
 from app.models import User
-from werkzeug.security import check_password_hash
-
+from werkzeug.security import check_password_hash   
 
 
 
@@ -70,6 +69,11 @@ if __name__ == "__main__":
     # AUTHENTICATION moved to bottom of page----------------------
 
 
+
+
+
+  #v.1----------------------
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -87,6 +91,31 @@ def login():
         print('not validated')
         return render_template('login.html', form=form)
 
+
+
+"""
+
+
+v.2 --- still error----------------------
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        email = form.email.data.lower()
+        password = form.password.data
+        queried_user = User.query.filter(User.email == email).first()
+        if queried_user and check_password_hash(queried_user.password_hash, password):  # Change this line
+            flash(f'Welcome back {queried_user.first_name}!', 'success')
+            return redirect(url_for('home'))
+        else:
+            error = 'INVALID EMAIL OR PASSWORD'
+            return render_template('login.html', form=form, error=error)
+    else:
+        print('not validated')
+        return render_template('login.html', form=form)
+
+""" 
 
 
 
