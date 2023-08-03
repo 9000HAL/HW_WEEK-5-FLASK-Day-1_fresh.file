@@ -47,7 +47,12 @@ def login():
 def signup():
     form = SignUpForm()
     if request.method == 'POST' and form.validate_on_submit():
-        pass
+        #first_name = form.first_name.data
+        #last_name = form.last_name.data
+        name = form.first_name.data + ' ' + form.last_name.data
+        email = form.email.data.lower()
+        password = form.password.data
+        print(name, email, password)
     else:
         return render_template('signup.html', form=form)
 
