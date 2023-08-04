@@ -95,7 +95,7 @@ if __name__ == "__main__":
 ###################LOGOUT
 
 @app.route('/logout')
-@login_required
+#@login_required
 def logout():
         logout_user()
         flash('Successfully logged out', 'warning')
