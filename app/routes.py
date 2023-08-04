@@ -4,6 +4,7 @@ from app.forms import LoginForm, SignUpForm
 from app import app, db
 from app.models import User
 from werkzeug.security import check_password_hash
+from flask_login import login_user, logout_user, current_user, login_required
 
 @app.route('/')
 @app.route('/home')
@@ -51,6 +52,7 @@ def login():
         password = form.password.data
         queried_user = User.query.filter(User.email == email).first()
         if queried_user and queried_user.check_password(password):
+            login_user(queried_user)
             flash(f'Welcome back {queried_user.first_name}!', 'success')
             return redirect(url_for('home'))
         else:
@@ -59,7 +61,6 @@ def login():
     else:
         print('not validated')
         return render_template('login.html', form=form)
-
 
 
 
