@@ -68,7 +68,6 @@ def load_user(user_id):
 
 
 
-
 ############lecture version below#######################
 
 """   
