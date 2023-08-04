@@ -88,10 +88,18 @@ def signup():
 if __name__ == "__main__":
     app.run(debug=True)
 
+#app = Flask(__name__) RE: ABOVE????
+
 ##################
 
+###################LOGOUT
 
-
+@app.route('/logout')
+@login_required
+def logout():
+        logout_user()
+        flash('Successfully logged out', 'warning')
+        return redirect(url_for('home'))
 
 
 
